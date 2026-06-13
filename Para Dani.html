@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Para Dani 🤍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:        oklch(0.985 0.012 320);
+    --bg-2:      oklch(0.965 0.022 318);
+    --card:      oklch(0.995 0.006 320);
+    --lilac:     oklch(0.72 0.095 305);
+    --lilac-soft:oklch(0.86 0.06 305);
+    --lilac-deep:oklch(0.52 0.11 300);
+    --pink:      oklch(0.86 0.055 350);
+    --pink-deep: oklch(0.66 0.10 355);
+    --ink:       oklch(0.34 0.025 312);
+    --ink-soft:  oklch(0.50 0.03 312);
+    --line:      oklch(0.90 0.02 315);
+    --shadow:    0 18px 50px -22px oklch(0.52 0.11 300 / 0.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Hanken Grotesk',system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .serif{font-family:'Instrument Serif',Georgia,serif;font-weight:400;line-height:1.05;letter-spacing:-0.01em}
+  .hand{font-family:'Caveat',cursive;font-weight:600}
+
+  /* ---------- floating pastel blobs ---------- */
+  .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:0.55}
+  .blob.b1{width:42vmax;height:42vmax;background:var(--lilac-soft);top:-14vmax;left:-10vmax;animation:drift1 22s ease-in-out infinite}
+  .blob.b2{width:34vmax;height:34vmax;background:var(--pink);bottom:-12vmax;right:-8vmax;animation:drift2 26s ease-in-out infinite}
+  .blob.b3{width:24vmax;height:24vmax;background:var(--lilac-soft);top:38%;right:14%;opacity:0.35;animation:drift1 30s ease-in-out infinite reverse}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vmax,3vmax) scale(1.08)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-3vmax,-4vmax) scale(1.1)}}
+
+  /* floating hearts / sprinkles */
+  .floaties{position:fixed;inset:0;z-index:1;pointer-events:none}
+  .floaty{position:absolute;bottom:-40px;font-size:18px;opacity:0;animation:rise linear infinite}
+  @keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:0.7}90%{opacity:0.7}100%{transform:translateY(-112vh) rotate(220deg);opacity:0}}
+
+  main{position:relative;z-index:2}
+  section{
+    min-height:100svh;
+    gap:2px;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+    padding:clamp(28px,7vw,90px) clamp(20px,6vw,40px);
+    position:relative;
+  }
+  .wrap{width:100%;max-width:680px;margin:0 auto}
+
+  /* ---------- reveal on scroll ---------- */
+  .r{opacity:0;transform:translateY(26px);filter:blur(6px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),filter .9s ease}
+  .r.in{opacity:1 !important;transform:none !important;filter:none !important}
+  .r.d1{transition-delay:.12s}.r.d2{transition-delay:.26s}.r.d3{transition-delay:.4s}.r.d4{transition-delay:.54s}.r.d5{transition-delay:.68s}
+
+  .eyebrow{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(26px,5vw,38px);color:var(--lilac-deep);transform:rotate(-3deg);display:inline-block}
+  h1.title{font-size:clamp(40px,9.5vw,88px)}
+  h2.title{font-size:clamp(34px,8vw,68px)}
+  .lead{font-size:clamp(17px,3.2vw,22px);color:var(--ink-soft);margin-top:18px;text-wrap:pretty}
+  .small{font-size:clamp(14px,2.6vw,16px);color:var(--ink-soft)}
+  .accent{color:var(--lilac-deep)}
+  em.pink{color:var(--pink-deep);font-style:italic}
+
+  /* scroll hint */
+  .hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--lilac-deep)}
+  .hint .arrow{width:22px;height:22px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(45deg);animation:bob 1.8s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:rotate(45deg) translate(0,0)}50%{transform:rotate(45deg) translate(5px,5px)}}
+
+  .lines p{font-size:clamp(24px,5.5vw,40px);line-height:1.25;margin:0}
+  .lines p + p{margin-top:.5em}
+
+  /* ---------- gift box ---------- */
+  .gift{position:relative;width:150px;height:140px;margin:18px auto 30px;animation:sway 4.5s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  .gift .box{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:132px;height:90px;background:var(--lilac);border-radius:6px 6px 12px 12px;box-shadow:inset -12px -14px 0 oklch(0.6 0.11 300 / .22)}
+  .gift .lid{position:absolute;bottom:86px;left:50%;transform:translateX(-50%);width:150px;height:30px;background:var(--lilac-deep);border-radius:8px}
+  .gift .ribv{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:22px;height:116px;background:var(--pink);opacity:.92;border-radius:0 0 4px 4px}
+  .gift .knot{position:absolute;bottom:102px;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:var(--pink-deep);box-shadow:inset -4px -5px 0 oklch(0.5 0.12 355 / .4)}
+  .gift .spark{position:absolute;top:0;right:18px;font-size:22px;animation:twinkle 2.6s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+
+  /* ---------- buttons ---------- */
+  .ask-stage{position:relative;width:100%;height:280px;margin-top:14px}
+  .btn{
+    font-family:'Hanken Grotesk',sans-serif;font-weight:700;border:none;cursor:pointer;
+    border-radius:999px;transition:transform .18s ease,box-shadow .25s ease,background .2s ease;
+  }
+  .btn-yes{
+    background:linear-gradient(180deg,var(--lilac) 0%,var(--lilac-deep) 130%);
+    color:white;font-size:22px;padding:18px 46px;box-shadow:var(--shadow);
+    position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:3;white-space:nowrap;
+  }
+  .btn-no{
+    position:absolute;background:var(--card);color:var(--ink-soft);border:1.5px solid var(--line);
+    font-size:17px;font-weight:600;padding:13px 30px;transition:left .28s cubic-bezier(.34,1.4,.5,1),top .28s cubic-bezier(.34,1.4,.5,1),transform .28s ease,opacity .28s ease;z-index:2;white-space:nowrap;
+  }
+  .btn-download{
+    margin-top:22px;background:var(--bg-2);color:var(--lilac-deep);border:1.5px solid var(--lilac-soft);
+    font-size:15px;font-weight:600;padding:12px 28px;cursor:pointer;border-radius:999px;
+    font-family:'Hanken Grotesk',sans-serif;transition:background .2s,transform .18s;
+  }
+  .btn-download:hover{background:var(--lilac-soft);transform:translateY(-2px)}
+
+  /* ---------- picker ---------- */
+  .gate{display:none}
+  .gate.open{display:flex}
+  .chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+  .chip{
+    font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:16px;cursor:pointer;
+    background:var(--card);border:1.5px solid var(--line);color:var(--ink);
+    border-radius:16px;padding:14px 18px;transition:all .2s ease;line-height:1.15;text-align:center;
+  }
+  .chip small{display:block;font-weight:500;font-size:13px;color:var(--ink-soft);margin-top:2px}
+  .chip:hover{border-color:var(--lilac-soft);transform:translateY(-2px)}
+  .chip.sel{background:var(--lilac);border-color:var(--lilac);color:white;box-shadow:var(--shadow)}
+  .chip.sel small{color:oklch(0.95 0.03 320)}
+  .field-label{font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:var(--lilac-deep);margin:30px 0 4px}
+  .timenote{margin-top:28px;font-size:18px;color:var(--ink-soft)}
+  .timenote strong{color:var(--lilac-deep);font-weight:700}
+  .cta{
+    margin-top:34px;background:linear-gradient(180deg,var(--pink) 0%,var(--pink-deep) 140%);color:white;
+    font-size:19px;padding:16px 40px;box-shadow:var(--shadow);opacity:.45;pointer-events:none;
+  }
+  .cta.ready{opacity:1;pointer-events:auto}
+  .cta.ready:hover{transform:translateY(-3px) scale(1.03)}
+
+  /* ---------- confirmation ---------- */
+  .ticket{
+    background:var(--card);border:1.5px solid var(--line);border-radius:26px;
+    padding:clamp(26px,5vw,40px);box-shadow:var(--shadow);text-align:left;width:100%;
+    position:relative;overflow:hidden;
+  }
+  .ticket::before{content:"";position:absolute;top:0;left:0;right:0;height:7px;background:linear-gradient(90deg,var(--lilac),var(--pink))}
+  .ticket .row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line)}
+  .ticket .row:last-child{border-bottom:none}
+  .ticket .k{font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:var(--lilac-deep);white-space:nowrap}
+  .ticket .v{font-weight:600;font-size:17px;text-align:right;color:var(--ink)}
+  .count{display:flex;gap:10px;justify-content:center;margin:26px 0 6px}
+  .count .u{background:var(--bg-2);border-radius:16px;padding:14px 8px;min-width:70px}
+  .count .n{font-family:'Instrument Serif',serif;font-size:clamp(32px,7vw,46px);color:var(--lilac-deep);line-height:1}
+  .count .l{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-top:4px}
+  .sig{font-family:'Caveat',cursive;font-weight:700;font-size:38px;color:var(--lilac-deep);margin-top:8px}
+
+  canvas#confetti{position:fixed;inset:0;z-index:50;pointer-events:none}
+
+  @media (max-width:480px){
+    .scoop{transform:scale(.88)}
+    .count .u{min-width:62px;padding:12px 6px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .r{transition:none;opacity:1;transform:none;filter:none}
+    .blob,.scoop,.hint .arrow,.floaty{animation:none}
+  }
+</style>
+</head>
+<body>
+  <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <div class="floaties" id="floaties"></div>
+  <canvas id="confetti"></canvas>
+
+  <main>
+    <!-- 1 · HERO -->
+    <section data-screen-label="Hero">
+      <div class="wrap">
+        <p class="eyebrow r">oye… Dani 🤍</p>
+        <h1 class="serif title r d1">Hay algo que<br>te quiero decir.</h1>
+        <p class="lead r d2">Prometo que vale la pena bajar.<br>Solo… quédate un momentito conmigo, ¿va?</p>
+      </div>
+      <div class="hint r d4"><span class="hand" style="font-size:22px">dale, baja</span><span class="arrow"></span></div>
+    </section>
+
+    <!-- 2 · MESSAGE -->
+    <section data-screen-label="Mensaje">
+      <div class="wrap lines">
+        <p class="serif r">Voy a ser <span class="accent">honesto</span> contigo.</p>
+        <p class="serif r d2">Te extraño. <em class="pink">Un montón.</em></p>
+      </div>
+    </section>
+
+    <!-- 3 · THE SURPRISE -->
+    <section data-screen-label="Sorpresa">
+      <div class="wrap">
+        <p class="eyebrow r">así que pensé…</p>
+        <h2 class="serif title r d1">Quiero llevarte a<br>una <span class="accent">cita sorpresa.</span></h2>
+        <div class="gift r d2" aria-hidden="true">
+          <div class="box"></div>
+          <div class="lid"></div>
+          <div class="ribv"></div>
+          <div class="knot"></div>
+          <span class="spark">✨</span>
+        </div>
+        <p class="lead r d3">No te voy a decir a dónde vamos. <em class="pink">Esa es la gracia.</em><br>Solo confía en mí esta vez, ¿sí?</p>
+        <p class="lead r d4" style="margin-top:14px">Ya pensé en todo — hasta en tu <span class="accent">lila</span> favorito.<br>Lo único que falta eres tú.</p>
+      </div>
+    </section>
+
+    <!-- 4 · THE QUESTION -->
+    <section data-screen-label="La pregunta">
+      <div class="wrap">
+        <p class="eyebrow r">entonces, Dani…</p>
+        <h2 class="serif title r d1" style="margin-bottom:6px">¿Vienes conmigo?</h2>
+        <p class="small r d2">(de verdad, de verdad espero que sí)</p>
+        <div class="ask-stage r d3" id="askStage">
+          <button class="btn btn-yes" id="yesBtn">Sí, voy 🤍</button>
+          <button class="btn btn-no" id="noBtn" style="left:58%;top:150px">No</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · PICKER (gated) -->
+    <section class="gate" id="gatePicker" data-screen-label="Cuando">
+      <div class="wrap">
+        <p class="eyebrow r in">sabía que dirías que sí 🤍</p>
+        <h2 class="serif title r in d1">¿Qué día te<br>queda <span class="accent">mejor</span>?</h2>
+        <p class="field-label">elige tu día</p>
+        <div class="chips" id="dayChips"></div>
+        <p class="timenote">Te veo a las <strong>12</strong>, princesa 🤍</p>
+        <button class="btn cta" id="confirmBtn">Es un plan →</button>
+      </div>
+    </section>
+
+    <!-- 6 · CONFIRMATION (gated) -->
+    <section class="gate" id="gateDone" data-screen-label="Confirmado">
+      <div class="wrap">
+        <p class="eyebrow r in">es oficial 🤍</p>
+        <h2 class="serif title r in d1" style="margin-bottom:24px">Tenemos un date.</h2>
+        <div class="ticket r in d2">
+          <div class="row"><span class="k">El plan</span><span class="v">Una cita sorpresa<br><span style="color:var(--ink-soft);font-weight:500">yo me encargo de todo</span></span></div>
+          <div class="row"><span class="k">Con</span><span class="v">Joss &amp; Dani</span></div>
+          <div class="row"><span class="k">El día</span><span class="v" id="vDay">—</span></div>
+          <div class="row"><span class="k">La hora</span><span class="v" id="vTime">12:00 PM</span></div>
+          <div class="count" id="count" aria-label="cuenta regresiva">
+            <div class="u"><div class="n" id="cd">0</div><div class="l">días</div></div>
+            <div class="u"><div class="n" id="ch">0</div><div class="l">hrs</div></div>
+            <div class="u"><div class="n" id="cm">0</div><div class="l">min</div></div>
+            <div class="u"><div class="n" id="cs">0</div><div class="l">seg</div></div>
+          </div>
+          <p class="small" style="text-align:center">lo que falta para verte 🤍</p>
+        </div>
+        <p class="lead" style="margin-top:26px">No traigas nada. Solo ven tú.</p>
+        <p class="sig">— Joss</p>
+        <button class="btn-download" id="downloadBtn">⬇ Guardar ticket</button>
+      </div>
+    </section>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- reveal on scroll ---------- */
+  var revealEls=[].slice.call(document.querySelectorAll('.r'));
+  function checkReveal(){
+    var vh=window.innerHeight||document.documentElement.clientHeight;
+    for(var i=revealEls.length-1;i>=0;i--){
+      var el=revealEls[i];
+      if(el.classList.contains('in')) { revealEls.splice(i,1); continue; }
+      var r=el.getBoundingClientRect();
+      if(r.top < vh*0.86 && r.bottom > 0){ el.classList.add('in'); revealEls.splice(i,1); }
+    }
+  }
+  window.addEventListener('scroll',checkReveal,{passive:true});
+  window.addEventListener('resize',checkReveal);
+  checkReveal();
+  [120,400,800].forEach(function(t){ setTimeout(checkReveal,t); });
+
+  /* ---------- floating hearts ---------- */
+  (function(){
+    var glyphs=['🤍','💜','🍦','✨','🥄'], host=document.getElementById('floaties');
+    for(var i=0;i<14;i++){
+      var s=document.createElement('span');
+      s.className='floaty';
+      s.textContent=glyphs[i%glyphs.length];
+      s.style.left=(Math.random()*100)+'%';
+      s.style.fontSize=(13+Math.random()*16)+'px';
+      var dur=11+Math.random()*12;
+      s.style.animationDuration=dur+'s';
+      s.style.animationDelay=(-Math.random()*dur)+'s';
+      host.appendChild(s);
+    }
+  })();
+
+  /* ---------- impossible "No" button ---------- */
+  var noBtn=document.getElementById('noBtn'),
+      yesBtn=document.getElementById('yesBtn'),
+      stage=document.getElementById('askStage'),
+      tries=0,
+      taunts=['No','¿en serio?','piénsalo bien','ándale, Dani','te va a gustar','porfa 🙏','no te arrepientes','…¿sí?','okay, ya'];
+
+  function dodge(){
+    tries++;
+    if(tries<taunts.length){ noBtn.textContent=taunts[tries]; }
+    var sc=Math.max(0.45,1-tries*0.09);
+    noBtn.style.transform='scale('+sc+')';
+    // Grow yes button scale via a data attr trick (avoid overriding translateX)
+    var growScale=1+Math.min(tries*0.06,0.5);
+    yesBtn.style.transform='translateX(-50%) scale('+growScale+')';
+    var PAD=18, nw=noBtn.offsetWidth+8, nh=noBtn.offsetHeight+8;
+    var sw=stage.clientWidth, sh=stage.clientHeight;
+    // Get yes button rect relative to stage
+    var sRect=stage.getBoundingClientRect(), yRect=yesBtn.getBoundingClientRect();
+    var yL=yRect.left-sRect.left-12, yT=yRect.top-sRect.top-12;
+    var yR=yL+yRect.width+24, yB=yT+yRect.height+24;
+    var newL, newT, ok=false, att=0;
+    while(!ok && att<40){
+      att++;
+      newL=PAD+Math.random()*Math.max(1,sw-nw-PAD*2);
+      newT=PAD+Math.random()*Math.max(1,sh-nh-PAD*2);
+      var nR=newL+nw, nB=newT+nh;
+      ok=(nR<yL)||(newL>yR)||(nB<yT)||(newT>yB);
+    }
+    noBtn.style.left=newL+'px';
+    noBtn.style.top=newT+'px';
+    if(tries>=8){ noBtn.style.opacity='0'; noBtn.style.pointerEvents='none'; }
+  }
+  noBtn.addEventListener('mouseenter',dodge);
+  noBtn.addEventListener('click',function(e){ e.preventDefault(); dodge(); });
+  noBtn.addEventListener('touchstart',function(e){ e.preventDefault(); dodge(); },{passive:false});
+
+  /* ---------- YES → open picker ---------- */
+  var state={day:null,dayLabel:null,time:'12:00',timeLabel:'12:00 PM'};
+
+  yesBtn.addEventListener('click',function(){
+    burst();
+    var g=document.getElementById('gatePicker');
+    g.classList.add('open');
+    setTimeout(function(){ g.scrollIntoView({behavior:'smooth'}); },240);
+  });
+
+  /* ---------- build day chips ---------- */
+  var DOW=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var dayHost=document.getElementById('dayChips');
+  (function(){
+    [22,23,24,25,26].forEach(function(day){
+      var d=new Date(2026,5,day); d.setHours(12,0,0,0);
+      var label=DOW[d.getDay()];
+      var sub=day+' jun';
+      var c=document.createElement('button');
+      c.className='chip'; c.innerHTML=cap(label)+'<small>'+sub+'</small>';
+      (function(dd,lab,sb,btn){ btn.addEventListener('click',function(){ pickDay(btn,dd,cap(lab)+' '+sb); }); })(d,label,sub,c);
+      dayHost.appendChild(c);
+    });
+  })();
+
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+  function pickDay(el,date,label){
+    [].forEach.call(dayHost.children,function(x){x.classList.remove('sel');});
+    el.classList.add('sel'); state.day=date; state.dayLabel=label; checkReady();
+  }
+  var confirmBtn=document.getElementById('confirmBtn');
+  function checkReady(){
+    if(state.day) confirmBtn.classList.add('ready');
+  }
+
+  /* ---------- CONFIRM → show ticket + countdown ---------- */
+  var target=null;
+  confirmBtn.addEventListener('click',function(){
+    if(!state.day||!state.time) return;
+    var hm=state.time.split(':');
+    target=new Date(state.day);
+    target.setHours(+hm[0],+hm[1],0,0);
+    document.getElementById('vDay').textContent=state.dayLabel;
+    document.getElementById('vTime').textContent=state.timeLabel;
+    var g=document.getElementById('gateDone');
+    g.classList.add('open');
+    burst();
+    setTimeout(function(){ g.scrollIntoView({behavior:'smooth'}); },240);
+    setTimeout(burst,500);
+    tick(); setInterval(tick,1000);
+  });
+
+  function pad(n){return n<10?'0'+n:''+n;}
+  function tick(){
+    if(!target) return;
+    var diff=Math.max(0,target-new Date());
+    var s=Math.floor(diff/1000);
+    document.getElementById('cd').textContent=Math.floor(s/86400);
+    document.getElementById('ch').textContent=pad(Math.floor(s%86400/3600));
+    document.getElementById('cm').textContent=pad(Math.floor(s%3600/60));
+    document.getElementById('cs').textContent=pad(s%60);
+  }
+
+  /* ---------- confetti ---------- */
+  var cv=document.getElementById('confetti'), cx=cv.getContext('2d'), parts=[], raf=null;
+  function size(){ cv.width=innerWidth; cv.height=innerHeight; }
+  size(); addEventListener('resize',size);
+  var COLORS=['#c9a7e8','#b388d9','#f3c6dd','#e79fc4','#ffffff','#d9b8f0'];
+  function burst(){
+    var cxp=innerWidth/2;
+    for(var i=0;i<90;i++){
+      parts.push({
+        x:cxp+(Math.random()-0.5)*120, y:innerHeight*0.35,
+        vx:(Math.random()-0.5)*9, vy:-6-Math.random()*9,
+        g:0.22+Math.random()*0.12, s:5+Math.random()*7,
+        c:COLORS[(Math.random()*COLORS.length)|0],
+        rot:Math.random()*6.28, vr:(Math.random()-0.5)*0.3, life:1,
+        shape:Math.random()<0.5?'rect':'circ'
+      });
+    }
+    if(!raf) raf=requestAnimationFrame(loop);
+  }
+  /* ---------- download ticket as JPG (pure canvas, no lib) ---------- */
+  function rrect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);
+    ctx.closePath();
+  }
+  var dlBtn=document.getElementById('downloadBtn');
+  if(dlBtn){
+    dlBtn.addEventListener('click',function(){
+      dlBtn.textContent='un seg… 🤍';
+      document.fonts.ready.then(function(){
+        var W=760,H=560,P=34,R=22,SC=2;
+        var cv2=document.createElement('canvas');
+        cv2.width=W*SC; cv2.height=H*SC;
+        var c=cv2.getContext('2d');
+        c.scale(SC,SC);
+
+        var LILAC='#9b72cf',LILACL='#c9a7e8',PINK='#e8b4cc',
+            INK='#4a3560',INK_S='#7a6890',LINE='#e2d8ef',
+            BG='#fdf8ff',BG2='#f0e8fb';
+
+        // outer bg
+        c.fillStyle=BG; c.fillRect(0,0,W,H);
+
+        // card shadow
+        c.save();
+        rrect(c,P,P,W-P*2,H-P*2,R);
+        c.shadowColor='rgba(107,63,160,0.22)';
+        c.shadowBlur=36; c.shadowOffsetY=10;
+        c.fillStyle='#ffffff'; c.fill();
+        c.restore();
+
+        // card border
+        rrect(c,P,P,W-P*2,H-P*2,R);
+        c.strokeStyle=LINE; c.lineWidth=1.5; c.stroke();
+
+        // top gradient bar
+        var grd=c.createLinearGradient(P,P,W-P,P);
+        grd.addColorStop(0,LILAC); grd.addColorStop(1,PINK);
+        rrect(c,P,P,W-P*2,8,R);
+        c.fillStyle=grd; c.fill();
+
+        // rows
+        var col1=P+38, col2=W-P-38, rowY=P+62, rowH=56;
+        var dayTxt=document.getElementById('vDay').textContent||'—';
+        var rows=[
+          ['El plan','Cita sorpresa ✨'],
+          ['Con','Joss & Dani 🤍'],
+          ['El día', dayTxt],
+          ['La hora','12:00 PM'],
+        ];
+        rows.forEach(function(row,i){
+          var ry=rowY+i*rowH;
+          c.font='700 23px Caveat, cursive';
+          c.fillStyle=LILAC; c.textAlign='left';
+          c.fillText(row[0],col1,ry);
+          c.font='600 16px "Hanken Grotesk", sans-serif';
+          c.fillStyle=INK; c.textAlign='right';
+          c.fillText(row[1],col2,ry);
+          if(i<rows.length-1){
+            c.save(); c.setLineDash([4,5]); c.strokeStyle=LINE; c.lineWidth=1;
+            c.beginPath(); c.moveTo(col1,ry+18); c.lineTo(col2,ry+18); c.stroke();
+            c.restore();
+          }
+        });
+
+        // countdown boxes
+        var cdY=rowY+rows.length*rowH+20;
+        var boxes=[
+          [document.getElementById('cd').textContent,'días'],
+          [document.getElementById('ch').textContent,'hrs'],
+          [document.getElementById('cm').textContent,'min'],
+          [document.getElementById('cs').textContent,'seg'],
+        ];
+        var bW=78,bH=66,bG=10,total=boxes.length*(bW+bG)-bG;
+        var sx=(W-total)/2;
+        boxes.forEach(function(b,i){
+          var bx=sx+i*(bW+bG);
+          rrect(c,bx,cdY,bW,bH,13);
+          c.fillStyle=BG2; c.fill();
+          c.font='400 30px "Instrument Serif", serif';
+          c.fillStyle=LILAC; c.textAlign='center';
+          c.fillText(b[0],bx+bW/2,cdY+38);
+          c.font='500 11px "Hanken Grotesk", sans-serif';
+          c.fillStyle=INK_S;
+          c.fillText(b[1].toUpperCase(),bx+bW/2,cdY+56);
+        });
+
+        // bottom texts
+        c.font='500 14px "Hanken Grotesk", sans-serif';
+        c.fillStyle=INK_S; c.textAlign='center';
+        c.fillText('lo que falta para verte 🤍',W/2,cdY+bH+22);
+        c.font='700 38px Caveat, cursive';
+        c.fillStyle=LILAC;
+        c.fillText('— Joss',W/2,cdY+bH+62);
+
+        var link=document.createElement('a');
+        link.download='date-dani-joss.jpg';
+        link.href=cv2.toDataURL('image/jpeg',0.95);
+        link.click();
+        dlBtn.textContent='⬇ Guardar ticket';
+      });
+    });
+  }
+
+  function loop(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    for(var i=parts.length-1;i>=0;i--){
+      var p=parts[i];
+      p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.life-=0.006;
+      if(p.life<=0||p.y>cv.height+40){ parts.splice(i,1); continue; }
+      cx.save(); cx.globalAlpha=Math.max(0,p.life); cx.translate(p.x,p.y); cx.rotate(p.rot); cx.fillStyle=p.c;
+      if(p.shape==='rect'){ cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6); }
+      else{ cx.beginPath(); cx.arc(0,0,p.s/2,0,6.28); cx.fill(); }
+      cx.restore();
+    }
+    if(parts.length){ raf=requestAnimationFrame(loop); } else { cx.clearRect(0,0,cv.width,cv.height); raf=null; }
+  }
+})();
+</script>
+</body>
+</html>
